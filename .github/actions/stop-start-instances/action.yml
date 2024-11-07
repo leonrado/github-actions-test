@@ -1,0 +1,20 @@
+name: Manage SQL Instances
+description: Action to manage SQL instances (start/stop) based on input parameters.
+inputs:
+  instances:
+    description: "List of instances to manage"
+    required: true
+  action:
+    description: "Action to perform (start or stop)"
+    required: true
+  env:
+    description: "Environment (DEV, UAT)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Execute SQL instance management
+      shell: bash
+      run: |
+        echo "Performing action '${{ inputs.action }}' on instances '${{ inputs.instances }}' in environment '${{ inputs.env }}'"
+        # Coloque aqui o comando que executa a ação start/stop nas instâncias

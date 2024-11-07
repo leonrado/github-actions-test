@@ -4,12 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-matrix:
-    uses: ./.github/workflows/manage-sql-instances.yml
-    with:
-      instances: ${{ matrix.instances }}
-      action: ${{ matrix.action }}
-      env: ${{ matrix.env }}    
+  trigger-stop-start:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
@@ -23,5 +19,16 @@ jobs:
             instances: [uat-instance-1, uat-instance-2]
             action: stop
             cron: '*/2 * * * *'
+  
+    steps:
+      - name: Call action
+        uses: leonrado/github-actions-test/.github/actions/stop-start-instances@main
+        with:
+          # instances: "test" #${{ matrix.instances }}
+          # action: ${{ matrix.action }}
+          # env: ${{ matrix.env }}    
+          instances: "test"
+          action: "stop"
+          env: "dev" 
 
 

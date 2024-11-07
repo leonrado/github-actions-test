@@ -8,34 +8,31 @@ on:
 
 
 jobs:
-  trigger-start-stop:
+  setup-matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # Defina as combinações de ambiente, ação e horários
         include:
-          # Parar DEV
           - env: DEV
             instances: 
              - dev-instance-1
              - dev-instance-2     
             action: stop
             cron: '0 20 * * *'
-          # Iniciar DEV
           - env: DEV
             instances: [dev-instance-1, dev-instance-2]
             action: start
             cron: '*/3 * * * *'
-          # Parar UAT
           - env: UAT
             instances: [uat-instance-1, uat-instance-2]
             action: stop
             cron: '*/2 * * * *'
-          
+        
     steps:
       - name: Verificar horário agendado
-        if: ${{ github.event.schedule == matrix.cron }}
         run: echo "Executando ação programada para ${{ matrix.env }}"
+        
 
       - name: Chamar workflow de gerenciamento de instâncias
         if: ${{ github.event.schedule == matrix.cron }}
