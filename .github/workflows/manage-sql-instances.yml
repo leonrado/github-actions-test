@@ -18,7 +18,6 @@ on:
         type: string
 
 jobs:
-  if {{ }}
   start-stop-instances:
     runs-on: ubuntu-latest
     strategy:
