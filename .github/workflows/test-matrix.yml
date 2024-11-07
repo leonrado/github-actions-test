@@ -4,8 +4,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  trigger-start-stop:
-    runs-on: ubuntu-latest
+  test-matrix:
+    uses: leonrado/github-action-test/.github/workflows/manage-sql-instances.yml@main
+    with:
+      instances: ${{ matrix.instances }}
+      action: ${{ matrix.action }}
+      env: ${{ matrix.env }}
     strategy:
       matrix:
         # Defina as combinações de ambiente, ação e horários
@@ -27,14 +31,3 @@ jobs:
             instances: [uat-instance-1, uat-instance-2]
             action: stop
             cron: '*/2 * * * *'
-          
-    steps:
-      - name: Verificar horário agendado
-        run: echo "Executando ação programada para ${{ matrix.env }}"
-
-      - name: Chamar workflow de gerenciamento de instâncias
-        uses: leonrado/github-action-test/.github/workflows/manage-sql-instances.yml@main
-        with:
-          instances: ${{ matrix.instances }}
-          action: ${{ matrix.action }}
-          env: ${{ matrix.env }}
