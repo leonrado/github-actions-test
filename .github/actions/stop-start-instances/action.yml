@@ -16,7 +16,7 @@ runs:
     - name: Execute SQL instance management
       shell: bash
       run: |
-        instances_json='${{ toJson(input.instances) }}'
+        instances_json='${{ toJson(inputs.instances) }}'
         
         instances_array=()
         
