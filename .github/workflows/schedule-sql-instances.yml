@@ -1,0 +1,53 @@
+# .github/workflows/schedule-sql-instances.yml
+name: Schedule SQL Instances Management
+
+on:
+  schedule:
+    # Parar instâncias DEV às 20h UTC todos os dias
+    - cron: '0 20 * * *'
+    # Iniciar instâncias DEV às 8h UTC todos os dias
+    - cron: '0 8 * * *'
+    # Parar instâncias UAT às 22h UTC todos os dias
+    - cron: '0 22 * * *'
+    # Iniciar instâncias UAT às 6h UTC todos os dias
+    - cron: '0 6 * * *'
+    # Adicione mais horários conforme necessário
+
+jobs:
+  trigger-start-stop:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Defina as combinações de ambiente, ação e horários
+        include:
+          # Parar DEV
+          - env: DEV
+            instances: [dev-instance-1, dev-instance-2]
+            action: stop
+            cron: '0 20 * * *'
+          # Iniciar DEV
+          - env: DEV
+            instances: [dev-instance-1, dev-instance-2]
+            action: start
+            cron: '0 8 * * *'
+          # Parar UAT
+          - env: UAT
+            instances: [uat-instance-1, uat-instance-2]
+            action: stop
+            cron: '0 22 * * *'
+          # Iniciar UAT
+          - env: UAT
+            instances: [uat-instance-1, uat-instance-2]
+            action: start
+            cron: '0 6 * * *'
+    steps:
+      - name: Verificar horário agendado
+        if: ${{ github.event.schedule == matrix.cron }}
+        run: echo "Executando ação programada para ${{ matrix.env }}"
+
+      - name: Chamar workflow de gerenciamento de instâncias
+        if: ${{ github.event.schedule == matrix.cron }}
+        uses: ./.github/workflows/manage-sql-instances.yml
+        with:
+          instances: ${{ matrix.instances }}
+          action: ${{ matrix.action }}

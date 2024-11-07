@@ -1,0 +1,26 @@
+# .github/workflows/manage-sql-instances.yml
+name: Manage SQL Instances
+
+on:
+  workflow_call:
+    inputs:
+      instances:
+        description: 'Lista de instâncias SQL'
+        required: true
+        type: string
+      action:
+        description: 'Ação a ser executada (start/stop)'
+        required: true
+        type: string
+
+
+jobs:
+  start-stop-instances:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        instance: ${{ inputs.instances }}
+    steps:
+      - name: Executar ação ${{ inputs.action }} na instância ${{ matrix.instance }}
+        run: |
+         echo "gcloud sql instances ${{ inputs.action }} ${{ matrix.instance }}"
