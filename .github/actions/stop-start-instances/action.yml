@@ -17,7 +17,7 @@ runs:
       shell: bash
       run: |-
 
-        echo "${{ inputs.instances }}"
+        echo  "${{ fromJson(inputs.instances) }}"
 
         # instances_array=()
         
