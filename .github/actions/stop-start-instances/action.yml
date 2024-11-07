@@ -16,6 +16,8 @@ runs:
     - name: Execute SQL instance management
       shell: bash
       run: -|
+        apt install jq -y
+        
         instances_json='${{ toJson(inputs.instances) }}'
         
         instances_array=()
