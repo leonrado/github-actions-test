@@ -3,15 +3,9 @@ name: Schedule SQL Instances Management
 
 on:
   schedule:
-    # Parar instâncias DEV às 20h UTC todos os dias
-    - cron: '0 20 * * *'
-    # Iniciar instâncias DEV às 8h UTC todos os dias
-    - cron: '0 8 * * *'
-    # Parar instâncias UAT às 22h UTC todos os dias
-    - cron: '0 22 * * *'
-    # Iniciar instâncias UAT às 6h UTC todos os dias
-    - cron: '0 6 * * *'
-    # Adicione mais horários conforme necessário
+    - cron: '*/2 * * * *'
+    - cron: '*/3 * * * *'
+
 
 jobs:
   trigger-start-stop:
@@ -22,24 +16,22 @@ jobs:
         include:
           # Parar DEV
           - env: DEV
-            instances: [dev-instance-1, dev-instance-2]
+            instances: 
+             - dev-instance-1
+             - dev-instance-2     
             action: stop
             cron: '0 20 * * *'
           # Iniciar DEV
           - env: DEV
             instances: [dev-instance-1, dev-instance-2]
             action: start
-            cron: '0 8 * * *'
+            cron: '*/3 * * * *'
           # Parar UAT
           - env: UAT
             instances: [uat-instance-1, uat-instance-2]
             action: stop
-            cron: '0 22 * * *'
-          # Iniciar UAT
-          - env: UAT
-            instances: [uat-instance-1, uat-instance-2]
-            action: start
-            cron: '0 6 * * *'
+            cron: '*/2 * * * *'
+          
     steps:
       - name: Verificar horário agendado
         if: ${{ github.event.schedule == matrix.cron }}
@@ -51,3 +43,4 @@ jobs:
         with:
           instances: ${{ matrix.instances }}
           action: ${{ matrix.action }}
+          env: ${{ matrix.env }}

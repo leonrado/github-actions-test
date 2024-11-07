@@ -49,4 +49,5 @@ jobs:
           for instance in "${instances_array[@]}"; do
             echo "Executaria ação '${{ matrix.action }}' na instância: $instance"
             # Comando real aqui
+            #gcloud sql 
           done

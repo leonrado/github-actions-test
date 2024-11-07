@@ -12,7 +12,10 @@ on:
         description: 'Ação a ser executada (start/stop)'
         required: true
         type: string
-
+      env:
+        description: "Ambiente"
+        required: true
+        type: string
 
 jobs:
   start-stop-instances:
