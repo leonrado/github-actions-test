@@ -16,4 +16,4 @@ runs:
     - name: Execute SQL instance management
       shell: bash
       run: |-
-        echo "instances = ${{ inputs.instance }}"
+        echo "instances = ${{ inputs.instances }}"
