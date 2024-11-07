@@ -17,7 +17,7 @@ runs:
       shell: bash
       run: |-
 
-        echo ${{ inputs.instances }}
+        echo "${{ inputs.instances }}"
 
         # instances_array=()
         
