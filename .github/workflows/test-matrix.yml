@@ -24,11 +24,8 @@ jobs:
       - name: Call action
         uses: leonrado/github-actions-test/.github/actions/stop-start-instances@main
         with:
-          # instances: "test" #${{ matrix.instances }}
-          # action: ${{ matrix.action }}
-          # env: ${{ matrix.env }}    
-          instances: "test"
-          action: "stop"
-          env: "dev" 
+          instances: ${{ matrix.instances }}
+          action: ${{ matrix.action }}
+          env: ${{ matrix.env }}    
 
 
