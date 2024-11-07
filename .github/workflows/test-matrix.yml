@@ -5,14 +5,13 @@ on:
 
 jobs:
   test-matrix:
-    uses: leonrado/github-action-test/.github/workflows/manage-sql-instances.yml@main
+    uses: ./.github/workflows/manage-sql-instances.yml
     with:
       instances: ${{ matrix.instances }}
       action: ${{ matrix.action }}
       env: ${{ matrix.env }}
     strategy:
       matrix:
-        # Defina as combinações de ambiente, ação e horários
         include:
           # Parar DEV
           - env: DEV
@@ -21,11 +20,6 @@ jobs:
              - dev-instance-2     
             action: stop
             cron: '0 20 * * *'
-          # Iniciar DEV
-          - env: DEV
-            instances: [dev-instance-1, dev-instance-2]
-            action: start
-            cron: '*/3 * * * *'
           # Parar UAT
           - env: UAT
             instances: [uat-instance-1, uat-instance-2]
