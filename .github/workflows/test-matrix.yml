@@ -33,7 +33,7 @@ jobs:
         run: echo "Executando ação programada para ${{ matrix.env }}"
 
       - name: Chamar workflow de gerenciamento de instâncias
-        uses: .github/workflows/manage-sql-instances.yml
+        uses: leonrado/github-action-test/.github/workflows/manage-sql-instances.yml
         with:
           instances: ${{ matrix.instances }}
           action: ${{ matrix.action }}
