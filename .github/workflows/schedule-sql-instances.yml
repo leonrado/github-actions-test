@@ -39,7 +39,7 @@ jobs:
 
       - name: Chamar workflow de gerenciamento de instâncias
         if: ${{ github.event.schedule == matrix.cron }}
-        uses: ./.github/workflows/manage-sql-instances.yml
+        uses: .github/workflows/manage-sql-instances.yml
         with:
           instances: ${{ matrix.instances }}
           action: ${{ matrix.action }}
