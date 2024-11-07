@@ -11,12 +11,12 @@ jobs:
         include:
           - env: DEV
             instances: 
-             - dev-instance-1
-             - dev-instance-2     
+             - "dev-instance-1"
+             - "dev-instance-2"     
             action: stop
             cron: '0 20 * * *'
           - env: UAT
-            instances: [uat-instance-1, uat-instance-2]
+            instances: ["uat-instance-1", "uat-instance-2"]
             action: stop
             cron: '*/2 * * * *'
   
