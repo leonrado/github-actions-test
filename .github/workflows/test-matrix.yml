@@ -9,19 +9,19 @@ jobs:
     with:
       instances: ${{ matrix.instances }}
       action: ${{ matrix.action }}
-      env: ${{ matrix.env }}
+      env: ${{ matrix.env }}    
     strategy:
       matrix:
         include:
-          # Parar DEV
           - env: DEV
             instances: 
              - dev-instance-1
              - dev-instance-2     
             action: stop
             cron: '0 20 * * *'
-          # Parar UAT
           - env: UAT
             instances: [uat-instance-1, uat-instance-2]
             action: stop
             cron: '*/2 * * * *'
+
+
