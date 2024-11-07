@@ -4,50 +4,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-matrix:
+  trigger-start-stop:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # Defina as combinações de ambiente, ação e horários
         include:
+          # Parar DEV
           - env: DEV
             instances: 
-              - dev-instance-1
-              - dev-instance-2
+             - dev-instance-1
+             - dev-instance-2     
             action: stop
             cron: '0 20 * * *'
-          - env: prod
-            instances: 
-              - prod-instance-1
-              - prod-instance-2
+          # Iniciar DEV
+          - env: DEV
+            instances: [dev-instance-1, dev-instance-2]
             action: start
-            cron: '0 8 * * *'
+            cron: '*/3 * * * *'
+          # Parar UAT
+          - env: UAT
+            instances: [uat-instance-1, uat-instance-2]
+            action: stop
+            cron: '*/2 * * * *'
+          
     steps:
-      - name: Exibir informações da matriz
-        run: |
-          echo "Ambiente: ${{ matrix.env }}"
-          echo "Instâncias: ${{ matrix.instances }}"
-          echo "Ação: ${{ matrix.action }}"
-          echo "Cron: ${{ matrix.cron }}"
+      - name: Verificar horário agendado
+        run: echo "Executando ação programada para ${{ matrix.env }}"
 
-      - name: Processar instâncias
-        shell: bash
-        run: |
-          echo "Processando instâncias no ambiente ${{ matrix.env }} com ação ${{ matrix.action }}"
-
-          # Converter o array em uma string JSON
-          instances_json='${{ toJson(matrix.instances) }}'
-
-          echo "Conteúdo de instances_json: $instances_json"
-
-          # Converter a string JSON em um array no shell
-          instances_array=()
-          while IFS= read -r instance; do
-            instances_array+=("$instance")
-          done < <(echo "$instances_json" | jq -r '.[]')
-
-          # Iterar sobre o array de instâncias
-          for instance in "${instances_array[@]}"; do
-            echo "Executaria ação '${{ matrix.action }}' na instância: $instance"
-            # Comando real aqui
-            #gcloud sql 
-          done
+      - name: Chamar workflow de gerenciamento de instâncias
+        uses: ./.github/workflows/manage-sql-instances.yml
+        with:
+          instances: ${{ matrix.instances }}
+          action: ${{ matrix.action }}
+          env: ${{ matrix.env }}
