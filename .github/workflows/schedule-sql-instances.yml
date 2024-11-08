@@ -3,8 +3,8 @@ name: Schedule SQL Instances Management
 
 on:
   schedule:
-    - cron: '*/2 * * * *'
-    - cron: '*/3 * * * *'
+    - cron: '*/2 * * * *' #DEV
+    - cron: '*/3 * * * *' #UAT
 
 jobs:
   trigger-stop-start:
