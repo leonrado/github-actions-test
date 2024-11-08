@@ -19,10 +19,7 @@ runs:
       run: -|
         instances_json='${{ inputs.instances }}'
         action='${{ inputs.action }}'
-        instances_array=()       
-        while IFS= read -r instance; do
-        instances_array+=("$instance")
-        done < <(echo $instances_json | jq -r '.[]')
-        for instance in "${instances_array[@]}"; do
-        echo "gcloud sql instances ${{ inputs.action }} $instance in env ${{ inputs.env }}"
+        instances=$(echo "$instances_json" | tr -d '[],"')
+        for instance in instances; do
+          echo "gcloud sql instances $action $instance in env ${{ inputs.env }}"
         done
