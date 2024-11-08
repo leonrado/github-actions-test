@@ -1,35 +1,35 @@
-# .github/workflows/schedule-sql-instances.yml
-name: Schedule SQL Instances Management
+# # .github/workflows/schedule-sql-instances.yml
+# name: Schedule SQL Instances Management
 
-on:
-  schedule:
-    - cron: '*/2 * * * *' #DEV
-    - cron: '*/3 * * * *' #UAT
+# on:
+#   schedule:
+#     - cron: '*/2 * * * *' #DEV
+#     - cron: '*/3 * * * *' #UAT
 
-jobs:
-  trigger-stop-start:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - env: DEV
-            instances: 
-             - dev-instance-1
-             - dev-instance-2     
-            action: stop
-            cron: '*/2 * * * *'
-          - env: UAT
-            instances: 
-              - uat-instance-1
-              - uat-instance-2
-            action: start
-            cron: '*/3 * * * *'
+# jobs:
+#   trigger-stop-start:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         include:
+#           - env: DEV
+#             instances: 
+#              - dev-instance-1
+#              - dev-instance-2     
+#             action: stop
+#             cron: '*/2 * * * *'
+#           - env: UAT
+#             instances: 
+#               - uat-instance-1
+#               - uat-instance-2
+#             action: start
+#             cron: '*/3 * * * *'
         
-    steps:
-      - name: Chamar workflow de gerenciamento de instâncias
-        if: ${{ github.event.schedule == matrix.cron }}
-        uses: leonrado/github-actions-test/.github/actions/stop-start-instances@main
-        with:
-          instances: ${{ toJson(matrix.instances) }}
-          action: ${{ matrix.action }}
-          env: ${{ matrix.env }}
+#     steps:
+#       - name: Chamar workflow de gerenciamento de instâncias
+#         if: ${{ github.event.schedule == matrix.cron }}
+#         uses: leonrado/github-actions-test/.github/actions/stop-start-instances@main
+#         with:
+#           instances: ${{ toJson(matrix.instances) }}
+#           action: ${{ matrix.action }}
+#           env: ${{ matrix.env }}
