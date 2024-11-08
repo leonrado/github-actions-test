@@ -21,6 +21,6 @@ runs:
         action='${{ inputs.action }}'
         instances=$(echo "$instances_json" | tr -d '[],"')
         echo $instances;
-        for instance in $(echo ; do
+        for instance in $instances ; do
           echo "gcloud sql instances $action $instance in env ${{ inputs.env }}"
         done
