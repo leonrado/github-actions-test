@@ -16,5 +16,5 @@ runs:
   steps:
     - name: Execute SQL instance management
       shell: bash
-      run: -|
+      run: |-
         echo Hello
