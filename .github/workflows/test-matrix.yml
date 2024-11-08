@@ -15,7 +15,7 @@ jobs:
              - "dev-instance-2"     
             action: stop
             cron: '*/3 * * * *'
-          - env: UAT
+          - env: DEV
             instances: 
              - uat-instance-1
              - uat-instance-2
