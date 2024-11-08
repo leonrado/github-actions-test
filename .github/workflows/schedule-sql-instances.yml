@@ -18,20 +18,16 @@ jobs:
              - dev-instance-2     
             action: stop
             cron: '*/2 * * * *'
-          - env: DEV
-            instances: [dev-instance-1, dev-instance-2]
-            action: start
-            cron: '*/3 * * * *'
           - env: UAT
             instances: [uat-instance-1, uat-instance-2]
-            action: stop
-            cron: '*/2 * * * *'
+            action: start
+            cron: '*/3 * * * *'
         
     steps:
       - name: Chamar workflow de gerenciamento de instâncias
         if: ${{ github.event.schedule == matrix.cron }}
         uses: leonrado/github-actions-test/.github/actions/stop-start-instances@main
         with:
-          instances: ${{ matrix.instances }}
+          instances: ${{ toJson(matrix.instances) }}
           action: ${{ matrix.action }}
           env: ${{ matrix.env }}
