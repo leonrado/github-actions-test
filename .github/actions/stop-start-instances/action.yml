@@ -19,7 +19,6 @@ runs:
       run: -|
         instances_json='${{ inputs.instances }}'
         action='${{ inputs.action }}'
-        instances=$(echo "$instances_json" | tr -d '[],"')
-        for instance in $instances; do
+        for instance in $(echo "$instances_json" | tr -d '[],"'); do
           echo "gcloud sql instances $action $instance in env ${{ inputs.env }}"
         done
