@@ -17,9 +17,7 @@ runs:
     - name: Execute SQL instance management
       shell: bash
       run: |-
-        instances_json='${{ inputs.instances }}'
-        action='${{ inputs.action }}'
-        instances=$(echo "$instances_json" | tr -d '[],"')
+        instances=$(echo "${{ inputs.instances }}" | tr -d '[],"')
         for instance in $instances ; do
-          echo "gcloud sql instances $action $instance in env ${{ inputs.env }}"
+          echo "gcloud sql instances ${{ input.action }} $instance in env ${{ inputs.env }}"
         done

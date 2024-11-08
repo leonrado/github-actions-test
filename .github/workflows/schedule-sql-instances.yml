@@ -19,7 +19,9 @@ jobs:
             action: stop
             cron: '*/2 * * * *'
           - env: UAT
-            instances: [uat-instance-1, uat-instance-2]
+            instances: 
+              - uat-instance-1
+              - uat-instance-2
             action: start
             cron: '*/3 * * * *'
         
