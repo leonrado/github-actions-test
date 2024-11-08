@@ -4,6 +4,7 @@ inputs:
   instances:
     description: "List of instances to manage"
     required: true
+    type: string
   action:
     description: "Action to perform (start or stop)"
     required: true
@@ -15,5 +16,5 @@ runs:
   steps:
     - name: Execute SQL instance management
       shell: bash
-      run: |-
-        echo  "${{ fromJson(inputs.instances) }}"
+      run: -|
+        echo "${{ inputs.instances }}"

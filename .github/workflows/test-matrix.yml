@@ -15,10 +15,10 @@ jobs:
              - "dev-instance-2"     
             action: stop
             cron: '0 20 * * *'
-          - env: UAT
-            instances: ["uat-instance-1", "uat-instance-2"]
-            action: stop
-            cron: '*/2 * * * *'
+          # - env: UAT
+          #   instances: ["uat-instance-1", "uat-instance-2"]
+          #   action: stop
+          #   cron: '*/2 * * * *'
   
     steps:
       - name: Call action
