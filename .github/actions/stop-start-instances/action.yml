@@ -19,5 +19,5 @@ runs:
       run: |-
         instances=$(echo "${{ inputs.instances }}" | tr -d '[],"')
         for instance in $instances ; do
-          echo "gcloud sql instances ${{ input.action }} $instance in env ${{ inputs.env }}"
+          echo "gcloud sql instances ${{ inputs.action }} $instance in env ${{ inputs.env }}"
         done
