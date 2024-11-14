@@ -1,0 +1,40 @@
+name: Conditional Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      containerName:
+        description: "Container name input"
+        required: true
+        default: "sam-r"
+
+jobs:
+  set-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment variable based on containerName
+        id: set_env
+        run: |
+          if [[ "${{ github.event.inputs.containerName }}" == "sam-r" ]]; then
+            echo "env_name=prod-d" >> $GITHUB_ENV
+          elif [[ "${{ github.event.inputs.containerName }}" == "sam-c" ]]; then
+            echo "env_name=uat" >> $GITHUB_ENV
+          else
+            echo "env_name=unknown" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Verify environment variable
+        run: |
+          echo "Environment selected: $env_name"
+        env:
+          env_name: ${{ env.env_name }}
+
+  main-steps:
+    needs: set-environment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use environment in further steps
+        run: |
+          echo "Using environment: $env_name for deployment or other actions"
+        env:
+          env_name: ${{ env.env_name }}
