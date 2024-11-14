@@ -20,3 +20,5 @@ runs:
         for instance in $(echo "${{ inputs.instances }}" | tr -d '[],"') ; do
           echo "gcloud sql instances ${{ inputs.action }} $instance in env ${{ inputs.env }}"
         done
+
+        
