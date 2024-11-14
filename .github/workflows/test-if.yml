@@ -15,12 +15,13 @@ jobs:
       - name: Set environment variable based on containerName
         id: set_env
         run: |
-          if [[ "${{ github.event.inputs.containerName }}" == "sam-r" ]]; then
+          if [[ "${{ inputs.containerName }}" == "sam-r" ]]; then
             echo "env_name=prod-d" >> $GITHUB_ENV
-          elif [[ "${{ github.event.inputs.containerName }}" == "sam-c" ]]; then
+          elif [[ "${{ inputs.containerName }}" == "sam-c" ]]; then
             echo "env_name=uat" >> $GITHUB_ENV
           else
             echo "env_name=unknown" >> $GITHUB_ENV
+          fi
         shell: bash
 
       - name: Verify environment variable
